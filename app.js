@@ -14,6 +14,16 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
+mongoose.connect("mongodb://localhost:27017/wikiDB", {useNewUrlParser:true});
+
+// create schema
+const articleSchema = {
+    title: String,
+    content: String
+}
+//create modal (usually singlur and captial format)
+const Article = mongoose.model("Article", articleSchema);
+
 //TODO
 
 app.listen(3000, function() {
