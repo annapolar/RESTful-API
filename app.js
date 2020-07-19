@@ -22,9 +22,11 @@ const articleSchema = {
     title: String,
     content: String
 }
-//create modal (usually singlur and capital format)
+// create modal (usually singlur and capital format)
 const Article = mongoose.model("Article", articleSchema);
 
+// Get Articles
+// app.get("route", function(req, res){})
 app.get("/articles", function(req, res){
     Article.find(function(err, foundArticles){
         if (!err){
@@ -33,6 +35,22 @@ app.get("/articles", function(req, res){
             res.send(err)
         }
     })
+})
+// Post Articles
+app.post("/articles", function(req, res){
+    // console.log(req.body.title)
+    // console.log(req.body.content)
+    const newArticle = new Article({
+        title: req.body.title,
+        content: req.body.content
+    })
+    newArticle.save(function(err){
+        if(!err){
+            res.send("Successfully added a new article!")
+        } else {
+            res.send(err)
+        }
+    });
 })
 
 app.listen(3000, function() {
