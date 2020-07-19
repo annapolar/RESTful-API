@@ -46,7 +46,17 @@ app.post("/articles", function(req, res){
     })
     newArticle.save(function(err){
         if(!err){
-            res.send("Successfully added a new article!")
+            res.send("Successfully added a new article")
+        } else {
+            res.send(err)
+        }
+    });
+})
+//Delete (if no condition in the deleteMarny call back function, it will delete all)
+app.delete("/articles", function(req, res){
+    Article.deleteMany(function(err){
+        if(!err){
+            res.send("Delete all articles successfully")
         } else {
             res.send(err)
         }
