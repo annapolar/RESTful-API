@@ -82,7 +82,18 @@ app.route("/articles/:articleTitle")
           }
       })
   })
-
+  .put(function(req, res){
+      Article.update(
+          {title: req.params.articleTitle}, //condition
+          {title: req.body.title, content:req.body.content},  //updates
+          {overwrite: true},
+          function(err){
+            if(!err){
+                res.send("Successfully updated the article")
+            }
+          }           
+      )
+  })
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
