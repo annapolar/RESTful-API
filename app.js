@@ -25,6 +25,8 @@ const articleSchema = {
 // create modal (usually singlur and capital format)
 const Article = mongoose.model("Article", articleSchema);
 
+
+// =============================== Request all articles ==============================
 // Using express chained route handler
 // http://expressjs.com/en/5x/api.html#router
 app
@@ -62,6 +64,25 @@ app
       }
     });
   });
+
+// =============================== Request a specific article ==============================
+// http://expressjs.com/en/5x/api.html#router.param
+// https://www.w3schools.com/tags/ref_urlencode.ASP
+
+//localhost:3000/articles/angular 10
+//req.params.articleTitle = "angular 10"
+
+app.route("/articles/:articleTitle")
+  .get(function(req, res){
+      Article.findOne({title: req.params.articleTitle}, function(err, foundArticle){
+          if(foundArticle){
+              res.send(foundArticle);
+          } else {
+            res.send("No articles matching that title was found")
+          }
+      })
+  })
+
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
