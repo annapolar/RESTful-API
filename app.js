@@ -82,6 +82,7 @@ app.route("/articles/:articleTitle")
           }
       })
   })
+
   .put(function(req, res){
       Article.update(
           {title: req.params.articleTitle}, //condition
@@ -94,6 +95,20 @@ app.route("/articles/:articleTitle")
           }           
       )
   })
+
+  .patch(function(req, res){
+      Article.update(
+        {title: req.params.articleTitle}, //condition
+        {$set: req.body},
+        function(err){
+            if(!err){
+                res.send("Successfully patch updated the article")
+            }else{
+                res.send(err)
+            }
+        }
+      )
+  });
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
